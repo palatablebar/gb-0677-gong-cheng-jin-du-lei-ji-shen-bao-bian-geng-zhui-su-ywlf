@@ -13,6 +13,7 @@
 | M5 扣回核算 | 查看并运行扣回核算 | `/api/deductions` | `app/modules/m5_deductions/rules.py` | `tests/test_m5.py` |
 | M6 进度对账 | 查看并运行进度对账 | `/api/valuation` | `app/modules/m6_valuation/rules.py` | `tests/test_m6.py` |
 | M7 签证归档 | 查看并运行签证归档 | `/api/certificates` | `app/modules/m7_certificates/rules.py` | `tests/test_m7.py` |
+| M8 区段裁决 | 裁决交叠班次归属并原子切换计量依据（仅API，无页面） | `/api/sections/adjudicate` | `app/modules/m8_sections/rules.py` | `tests/test_m8.py` |
 
 ## 陷阱登记
 
@@ -30,6 +31,9 @@
 | TRAP-07 | 累计量空值 | 按零冲回 | 隔离缺失 | `app/values.py` | `tests/test_m2.py::test_real_null_not_zero` |
 | TRAP-10 | 分币舍入 | 浮点误差 | 分项量化后净额守恒 | `app/modules/m5_deductions/rules.py` | `tests/test_m5.py::test_fraction_rounds_to_cent` |
 | TRAP-23 | 变更生效边界 | 旧价覆盖 | 按周期选择已批版本 | `app/modules/m3_changes/rules.py` | `tests/test_m3.py::test_effective_boundary` |
+| TRAP-27 | 区间交叠双计 | 先报先得 | 按开工先后裁决，签认区间扫描分割互斥 | `app/modules/m8_sections/rules.py` | `tests/test_m8.py::test_signed_intervals_non_overlapping_and_cover_union` |
+| TRAP-28 | 切换失败丢旧签证 | 直接覆盖 | 事务切换+覆盖缺口拒绝+旧依据留存 | `app/store.py` | `tests/test_m8.py::test_switch_gap_keeps_old_basis` |
+| TRAP-29 | 依据重试重复计量 | 重复插入 | 内容摘要作依据标识，重试幂等 | `app/store.py` | `tests/test_m8.py::test_switch_activates_and_retry_idempotent` |
 
 ## 对账规则
 

@@ -20,10 +20,11 @@ docker compose exec -T app pytest -q
 - 5. 扣回核算：`/deductions`，`/api/deductions`。
 - 6. 进度对账：`/valuation`，`/api/valuation`。
 - 7. 签证归档：`/certificates`，`/api/certificates`。
+- 8. 区段裁决（仅API）：`/api/sections/adjudicate`，`/api/sections/basis`。
 
 ## 核心规则
 
-累计申报必须减前期已审金额，变更按审批生效版本覆盖；负进度需关联冲回证据。
+累计申报必须减前期已审金额，变更按审批生效版本覆盖；负进度需关联冲回证据。交叠班次按先开工段优先裁决，签认区间互不重叠；计量依据切换整体成事务，失败保留旧签证，同一依据重试不重复计量。
 
 ## 演示
 
